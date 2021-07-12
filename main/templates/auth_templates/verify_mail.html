@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>Animated Login Form</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	
+	<!-- <img class="wave" src="img/wave.png"> -->
+	<div class="container">
+		<div class="img">
+			<img src="{% static 'img/login/undraw_breakfast_psiw.svg' %}">
+		</div>
+		{% if user.is_authenticated%}
+          <br>
+		<h2> You Are Already Loggedin !
+		 <a href="{% url 'user_logout' %}">Logout Here !
+
+		{% else %}
+
+		<div class="login-content">
+				<img src="{% static 'img/login/undraw_Hamburger_8ge6.svg'%}">
+				<h2 class="title">Please Verify Your Mail !</h2>
+                <h4> NOTE : Also Check Your Spam Folder !</h4>
+		
+        </div>
+		
+    </div>
+    <br>
+    <h4><a href="{% url 'user_login'%}"</h4>
+    <script type="text/javascript" src="{% static 'js/main.js'%}"></script>
+	{% endif %}
+</body>
+</html>

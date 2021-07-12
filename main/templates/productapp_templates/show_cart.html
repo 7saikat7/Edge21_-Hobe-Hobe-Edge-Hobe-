@@ -1,0 +1,431 @@
+
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/css/swiper.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Oswald:500" rel="stylesheet">
+<script>!function(e){"undefined"==typeof module?this.charming=e:module.exports=e}(function(e,n){"use strict";n=n||{};var t=n.tagName||"span",o=null!=n.classPrefix?n.classPrefix:"char",r=1,a=function(e){for(var n=e.parentNode,a=e.nodeValue,c=a.length,l=-1;++l<c;){var d=document.createElement(t);o&&(d.className=o+r,r++),d.appendChild(document.createTextNode(a[l])),n.insertBefore(d,e)}n.removeChild(e)};return function c(e){for(var n=[].slice.call(e.childNodes),t=n.length,o=-1;++o<t;)c(n[o]);e.nodeType===Node.TEXT_NODE&&a(e)}(e),e});
+</script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.4.1/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
+
+
+<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    
+    <title>Tip Coin</title>
+    <style>
+         
+
+    </style>
+  </head>
+  <body>
+  <section class="navb" id="home">
+        <div class="logo">
+           <a href="/">
+            <img src="{% static 'img/login/food & beverage.svg' %}" alt="">
+           </a>
+        </div>
+        <a href="{% url 'PRODUCT:view_cart' %}">
+        
+          <div class="cart">
+             {% for i in check_cart%}
+            <span>{{i.prod_quantity}}</span>
+            {% endfor %}
+
+            <img src="{% static 'img/add-to-basket.svg'%}" alt="" class="bucket">
+           
+          </div>
+        </a>
+        <div class="sidebar" id="bar">
+         
+            <img src="{% static 'img/menu.png' %}" alt="">
+        </div>
+        <nav id="navbox">
+            <div class="profile">
+                <img src="{% static 'img/login/undraw_eating_together_tjhx.svg' %}" alt="">
+                <h3>Eat Together</h3>
+            </div>
+            <div id="crossBox">
+                <img src="{% static 'img/close.png' %}" alt="" id="close">
+            </div>
+            <ul>
+                <li><a href="/" class="link"><i class="fa fa-home " aria-hidden="true"></i> Home</a></li>
+               
+               
+                <li><a href="{% url 'dashboard' %}" class="link"><i class="fa fa-address-book-o" aria-hidden="true"></i>Account</a></li>
+                <li><a href="{% url 'user_login' %}" class="link"><i class="fa fa-user-o" aria-hidden="true"></i>Login</a></li>
+            </ul>
+        </nav>
+       
+    </section>
+
+ 
+
+    <main>
+        <section class="cart-item">
+            <div class="container">
+                <br><br>
+                <h1>Check Your Cart Items</h1>
+                <br>
+                <section class="cart-out">
+
+                <div class="row">
+                
+{% if check_cart|length < 1 %}
+<br>
+<br>
+       <section class="cart-item">
+            <div class="container">
+                <br><br>
+                <h1>{{no_product}}</h1>
+                <br>
+                <section class="cart-out">
+
+                <div class="row">
+<br>
+<br>
+<br>
+<h4><a href="/">Go To Shopping !</h4>
+
+{% else %}
+                    {% for i in check_cart %}
+                    <div class="col-lg-3 col-md-4 col-6 mb-4">
+                        <div class="card">
+                            <img src={{i.product_p.image1.url}} alt="" class="img-fluid">
+                            <div class="p-1">
+                                <p>{{i.name}}</p>
+
+                            </div>
+                            <div class="pri">
+                                <p>Price: ₹<span id="price1">{{original_price_ofcart}}</span> x <span id="numqty1">{{i.prod_quantity}}</span></p>
+                                <p>Total: <span id="total1">{{total_amount}}</span></p>
+                            </div>
+                            <div class="ope">
+                            {% comment %} onclick="dec('qty1','price1','numqty1','total1')" {% endcomment %}
+                                <div class=" d-flex ">
+                                    <button class="minus-cart btn btn-info" prodid="{{i.product_p.custom_id}}" ><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                     <input type="text" readonly value={{i.prod_quantity}} id="qty1" class="inp-box" size="1" style="width: 40px;padding-left: 10px;" >
+                                  <button <a class="plus-cart btn btn-info" prodid="{{i.product_p.custom_id}}"><i class="fa fa-plus" aria-hidden="true"></a></i></button></a>
+                               {% comment %} <button><a type="button"  class="minus-cart btn-success border border-light p-2" prodid="{{i.product_p.custom_id}}">-</a></button> {% endcomment %}
+
+                                </div>
+                                <div class="remove">
+                                    <button class="del-cart btn btn-danger" prodid="{{i.product_p.custom_id}}">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                  
+                </div>
+                <div class="row checkout">
+                    <div class="col-lg-6 col-md-4 col-12 mx-auto mb-3 vb">
+                        <img src="{% static 'img/bitcoin.png' %}" alt="" class="coin">
+                        <h3> Give a Tip:</h3>
+                        <p>Here will be Tip Coin , One Tip Coin = 20 inr</p>
+
+                        <div class="tip-box">
+                         <button class="add-tip-coin btn btn-info" onclick="tipdec('tip1')"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                         <input type="text" readonly value="1" id="tip1" class="inp-box" size="1" style="width: 40px;padding-left: 10px;" >
+                         <button class="reduce-top-coin btn-info" onclick="tipinc('tip1')"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                        </div>
+                        <br>
+                        
+                        <h4>Sub Total : <span id="total-price">{{original_price_ofcart}}</span>.00 </h4>
+                        <h4>Delivary : <span id="tax-price">50</span>.00 </h4>
+                        <h4>Tip- : <span id="tipprice1">20</span>.00 </h4>
+                        <hr>
+                        {% comment %} <h3>Total Price : <span id="total-price">{{i.cart_total}}</span>.00 </h3> {% endcomment %}
+                         
+
+                    </div>
+                    <div class="col-lg-6 col-md-8 col-12 mx-auto mb-3">
+                      <div class="card">
+                        <div class="text-right">
+                         <a href="{% url 'add_address' %}" class="btn btn-info">Add Address</a>
+
+                        </div>
+                        <br>
+                         <form action="{% url 'PRODUCT:checkout' %}" method="POST">{% csrf_token %}
+                          <p>Check One Address Delivary Address: </p>
+                          <br>
+                          <!-- <div class="form-group">
+                                  <label for="">Total Amount:</label>
+                                  <input type="text" class="form-control" placeholder="" name="amount" disabled value="125.00">
+                                </div> -->
+                                {% for i in add %}
+                          <div class="form-check">
+                          
+                            <label class="form-check-label">
+                              <input type="radio" class="form-check-input" name="check_add_id"  value="{{i.pk}}" required>Ordered By :&nbsp{{user.first_name}} <br>Add id:{{i.pk}} >{{user.username}} <br>
+                              <br> {{i.ph_no}} <br> {{i.pin}}<br> 
+                              <br> {{i.f_add}}
+
+                            </label>
+                          </div>
+                          {% endfor %}
+                          <br>
+
+                          <div class="text-center">
+                            <input type="submit" class="btn btn-info" name="continue" value="Checkout">
+                          </div>
+                        </form>
+
+                        <br>
+
+
+
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+        </section>
+
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-12 mx-auto mb-3">
+                    <h2 class="text-white">Gallery</h2>
+                    <br>
+                    <div class="d-inline-block">
+                      
+                       <a href=""> <img src="{% static 'img/eaters-collective-12eHC6FxPyg-unsplash.jpg' %}" alt="" class="fot-img"></a>
+                       <a href=""><img src="{% static 'img/anna-tukhfatullina-food-photographer-stylist-Mzy-OjtCI70-unsplash.jpg' %}" alt="" class="fot-img"></a>
+                       
+                    </div>
+                    
+                    <div class="d-inline-block mt-2">
+                      
+                       <a href=""> <img src="{% static 'img/joseph-gonzalez-zcUgjyqEwe8-unsplash.jpg'%}" alt="" class="fot-img"></a>
+                      <a href="">  <img src="{% static 'img/casey-lee-awj7sRviVXo-unsplash.jpg'%}" alt="" class="fot-img"></a>
+                       
+                    </div>
+                    <div class="d-inline-block mt-2">
+                      
+                        <a href=""> <img src="{% static 'img/pablo-merchan-montes-MXovqM130UI-unsplash.jpg' %}" alt="" class="fot-img"></a>
+                       <a href="">  <img src="{% static 'img/alex-munsell-auIbTAcSH6E-unsplash.jpg' %}" alt="" class="fot-img"></a>
+                        
+                     </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 mx-auto mb-3">
+                    <h2 class="text-white">Links</h2>
+                    <br>
+                    <div class="p-3 box-top">
+                        <ul>
+                            <li><a href="index.html"><i class="fa fa-check-square-o pr-2" aria-hidden="true"></i>Home</a></li>
+                            <hr>
+                            <li><a href="account.html"><i class="fa fa-check-square-o pr-2" aria-hidden="true"></i>Account</a></li>
+                            <hr>
+                            <li><a href="login.html"><i class="fa fa-check-square-o pr-2" aria-hidden="true"></i>Login</a></li>
+                            <hr>
+                           
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 col-12 mx-auto mb-3">
+                    <h2 class="text-white">Contact Us</h2>
+                    <br>
+                    <strong class="text-white">Address:</strong>
+                    <br>
+                    <p class="text-white">Bay Square 1, Building 7, Office 401-23 Business Bay, Dubai, United Arab Emirates</p>
+                   <div class="box-top">
+                    <hr>
+                   </div>
+                    <strong class="text-white">Number:</strong>
+                    <br>
+                    <p class="text-white">+9593879456</p>
+                    <div class="box-top">
+                        <hr>
+                       </div>
+                        <strong class="text-white">Email:</strong>
+                        <br>
+                        <p class="text-white">7saikat7@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+  
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+   
+  <script src="{% static 'js/index.js' %}"></script>
+   
+  {% comment %} <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+ {% endcomment %}
+
+
+<script language='javascript' type='text/javascript'>
+console.log("Working the script tag!")
+
+$('.plus-cart').click(function(){
+
+    var id =$(this).attr("prodid").toString();
+    var element= this.parentNode.children[1]
+
+    
+    
+    console.log('clicked....For Plus Cart............')
+    console.log(id)
+    console.log(element)
+
+
+    $.ajax({
+
+        type:"GET",
+        url:"/plus_cart",
+        data:{
+            prod_id : id
+        },
+        success: function(plus_cart_res) {
+           
+            console.log(plus_cart_res)
+            console.log("succes")
+            location.reload()
+
+        }
+    })
+})
+
+$('.minus-cart').click(function(){
+
+    var id =$(this).attr("prodid").toString();
+    
+    console.log('clicked....For Minus Cart............')
+    console.log(id)
+
+    $.ajax({
+
+        type:"GET",
+        url:"/minus_cart",
+        data:{
+            prod_id : id
+        },
+        success: function(minus_cart_res) {
+           
+            console.log(minus_cart_res)
+            console.log("succes")
+            location.reload()
+
+        }
+    })
+})
+
+
+$('.del-cart').click(function(){
+
+    var id =$(this).attr("prodid").toString();
+    
+    console.log('clicked....For Minus Cart............')
+    console.log(id)
+
+    $.ajax({
+
+        type:"GET",
+        url:"/delete_cart",
+        data:{
+            prod_id : id
+        },
+        success: function(delete_cart_res) {
+           
+            console.log(delete_cart_res)
+            console.log("success")
+            location.reload()
+
+        }
+    })
+})
+
+$('.add-tip-coin').click(function(){
+
+    var id =$(this).attr("prodid");
+    {% comment %} var element= this.parentNode.children[1] {% endcomment %}
+
+
+    
+    console.log('clicked..FOR TIP COIN........')
+    console.log(id)
+  
+
+
+    $.ajax({
+
+        type:"GET",
+        url:"/add_tipcoin",
+        data:{
+            prod_id : id
+        },
+        success: function(tip_coin_res) {
+           
+            console.log(tip_coin_res)
+            console.log("succes")
+            location.reload()
+
+        }
+    })
+})
+
+$('.reduce-tip-coin').click(function(){
+
+    var id =$(this).attr("prodid");
+     var element= this.parentNode.children[1]
+
+    
+    
+    console.log('clicked..FOR TIP COIN    REDUCTION ........')
+    console.log(id)
+  
+
+
+    $.ajax({
+
+        type:"GET",
+        url:"/reduce_tipcoin",
+        data:{
+            prod_id : id
+        },
+        success: function(tip_coin_res) {
+           
+            console.log(tip_coin_res)
+            console.log("succes")
+            location.reload()
+
+        }
+    })
+})  
+</script>
+{% endif %}
+
+  </body>
+</html>
